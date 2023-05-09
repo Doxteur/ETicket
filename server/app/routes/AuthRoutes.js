@@ -66,4 +66,9 @@ export default router()
       console.error(err);
       res.status(500).json({ message: "Internal server error" });
     }
+  })
+  .get("/me", async (req, res) => {
+    console.log("test");
+    res.json({ message: "test" });
   });
+

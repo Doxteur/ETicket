@@ -1,11 +1,8 @@
 import { Router as router } from 'express';
 
 // Routes
-import NoteRoutes from './NoteRoutes.js';
 import AuthRoutes from './AuthRoutes.js';
 
-// Middleware
-import auth from '../middlewares/auth.js';
 
 export default router()
     .get('/', (req, res) => {
