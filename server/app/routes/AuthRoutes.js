@@ -70,5 +70,19 @@ export default router()
   .get("/me", async (req, res) => {
     console.log("test");
     res.json({ message: "test" });
+  })
+  .get("/createtestuser", async (req, res) => {
+    try {
+      const user = await prisma.user.create({
+        data: {
+          email: "test@gmail.com",
+          password: bcrypt.hashSync("test", 8),
+        },
+      });
+      res.json({ message: "User Created" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
   });
 

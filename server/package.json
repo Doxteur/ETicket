@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@prisma/client": "^4.13.0",
-    "prisma": "^4.13.0"
+    "prisma": "^4.14.0"
   },
   "name": "enote",
   "description": "## Contexte",
@@ -10,7 +10,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon App.js",
-    "production" : "node App.js",
+    "production": "node App.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
