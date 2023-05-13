@@ -2,7 +2,8 @@ import { Router as router } from 'express';
 
 // Routes
 import AuthRoutes from './AuthRoutes.js';
-
+import TicketsRoutes from './TicketsRoutes.js';
+import auth from '../middlewares/Auth.js';
 
 export default router()
     .get('/', (req, res) => {
@@ -10,4 +11,6 @@ export default router()
             message: 'Welcome to the API'
         });
     })
-    .use('/auth', AuthRoutes);
+    .use('/auth', AuthRoutes)
+    .use('/tickets',auth, TicketsRoutes);
+    

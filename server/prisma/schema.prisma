@@ -7,22 +7,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int
-  author    User     @relation(fields: [authorId], references: [id])
+// model Post {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   title     String   @db.VarChar(255)
+//   content   String?
+//   published Boolean  @default(false)
+//   authorId  Int
+//   author    User     @relation(fields: [authorId], references: [id])
+// }
+
+// model Profile {
+//   id     Int     @id @default(autoincrement())
+//   bio    String?
+//   userId Int     @unique
+//   user   User    @relation(fields: [userId], references: [id])
+// }
+
+model TypeNote {
+  id      Int      @id @default(autoincrement())
+  name    String
+  notes   Ticket[]
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  userId Int     @unique
-  user   User    @relation(fields: [userId], references: [id])
+model Ticket {
+  id      Int      @id @default(autoincrement())
+  title   String
+  content String
+  priority Int
+  status Int? @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  typeNoteId Int
+  typeNote TypeNote @relation(fields: [typeNoteId], references: [id])
+  authorId Int
+  author  User    @relation(fields: [authorId], references: [id])
+  affectedUserId Int
+  affectedUser User @relation("AffectedUser", fields: [affectedUserId], references: [id])
 }
 
 model User {
@@ -30,6 +52,20 @@ model User {
   email   String   @unique
   password String
   name    String?
-  posts   Post[]
-  profile Profile?
+  author   Ticket[]
+  affectedNotes Ticket[] @relation("AffectedUser")
+  tokens  Token[]
+}
+
+model Token {
+ id         Int       @id @default(autoincrement())
+ createdAt  DateTime  @default(now())
+ updatedAt  DateTime  @updatedAt
+ emailToken String?   @unique // Only used for short lived email tokens
+ valid      Boolean   @default(true)
+ expiration DateTime
+
+ // Relation fields
+ userId Int
+ user   User @relation(fields: [userId], references: [id])
 }
