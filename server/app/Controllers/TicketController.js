@@ -86,4 +86,18 @@ const changeStatus = async (req, res) => {
   res.json(response);
 };
 
-export { getTickets, addTicket, assignTicket, changeStatus };
+const deleteTicket = async (req, res) => {
+    const { ticketId } = req.body;
+    if (!ticketId) return res.status(400).json({ message: "Missing fields" });
+
+    const response = await prisma.ticket.delete({
+        where: {
+            id: ticketId,
+        },
+    });
+
+    res.json(response);
+};
+
+
+export { getTickets, addTicket, assignTicket, changeStatus, deleteTicket };
