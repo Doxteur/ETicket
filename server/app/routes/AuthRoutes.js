@@ -68,8 +68,21 @@ export default router()
     }
   })
   .get("/me", async (req, res) => {
-    console.log("test");
-    res.json({ message: "test" });
+    try {
+      // use user token to find user 
+      const user = await prisma.user.findUnique({
+        where: {
+          id: req.body.userId ,
+        },
+        include: {
+          affectedNotes: true,
+        },
+      });
+      res.json(user);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
   })
   .get("/createtestuser", async (req, res) => {
     try {
