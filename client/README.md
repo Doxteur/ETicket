@@ -1,38 +1,25 @@
-<p align="center"><img src="https://i.imgur.com/flcMvDC.png"></p>
+# ⚛ Electron - React - TailwindCSS Template With Router
 
-## Usage
+A very simple and functional template for you to use Electron, React and TailwindCSS together.
 
-### Create an App
+# 🎀 Features
 
-```
-# with npx
-$ npx create-nextron-app my-app --example with-material-ui
+-   Use React for creating interfaces
+-   Use `react-router-dom` for routing
+-   Use TailwindCSS for styling
+-   Basic functions are ready to use such as creating tray icon, creating notifications etc.
 
-# with yarn
-$ yarn create nextron-app my-app --example with-material-ui
+# 🤓 Insatllation
 
-# with pnpx
-$ pnpx create-nextron-app my-app --example with-material-ui
-```
+-   Clone repo
+-   Run `npm install` or `yarn`
+-   Run `npm run dev` or `yarn dev` to start development server
+-   Run `npm run build` or `yarn build` to create executable
 
-### Install Dependencies
+# 🧦 Contributing
 
-```
-$ cd my-app
+Feel free to use GitHub's features.
 
-# using yarn or npm
-$ yarn (or `npm install`)
+# 📄 Copyrights
 
-# using pnpm
-$ pnpm install --shamefully-hoist
-```
-
-### Use it
-
-```
-# development mode
-$ yarn dev (or `npm run dev` or `pnpm run dev`)
-
-# production build
-$ yarn build (or `npm run build` or `pnpm run build`)
-```
+Copyrights for `public/favicon.ico`, `public/icon.ico` and `public/icon.png` are owned by [Brawlhalla, Blue Mammoth Games](https://www.brawlhalla.com/)

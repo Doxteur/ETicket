@@ -8,9 +8,9 @@ const prisma = new PrismaClient();
 
 export default router()
   .post("/login", async (req, res) => {
-    console.log("req.body", req.body);
     try {
       if (!req.body?.email || !req.body?.password) {
+        console.log("req.body", req.body);
         return res.status(400).json({ message: "Missing email or password" });
       }
       const user = await prisma.user.findUnique({
@@ -19,10 +19,10 @@ export default router()
         },
       });
       if (!user) {
-        return res.status(200).json({ error: "L'utilisateur n'éxiste pas" });
+        return res.status(401).json({ error: "L'utilisateur n'éxiste pas" });
       }
       if (!bcrypt.compareSync(req.body.password, user.password)) {
-        return res.status(200).json({ error: "Mauvais mot de passe" });
+        return res.status(401).json({ error: "Mauvais mot de passe" });
       }
       const token = signToken(user);
 

@@ -54,6 +54,6 @@ model User {
   name    String?
   author   Ticket[]
   affectedNotes Ticket[] @relation("AffectedUser")
-  tokens  String  @default("")
+  token  String  @default("")
 }
 
