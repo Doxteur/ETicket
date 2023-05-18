@@ -15,8 +15,17 @@ const getTickets = async (req, res) => {
         },
       ],
     },
+    include: {
+      author: {
+        select: {
+          id: true,
+          name: true,
+        },
+      }
+    
+    },  
   });
-  res.json(tickets);
+  return tickets;
 };
 
 const addTicket = async (req, res) => {

@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { getTickets } from "../../store/Tickets/ticketSlice";
+
 
 function Content() {
 	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth);
+	const tickets = useSelector((state) => state.tickets);
+
+	useEffect(() => {
+		console.log(auth);
+
+		dispatch(getTickets(auth.token));
+	}, []);
 
 	return (
 		<>

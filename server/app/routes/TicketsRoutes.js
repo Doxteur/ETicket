@@ -10,7 +10,6 @@ import {
 export default router()
   .get("/", async (req, res) => {
     const tickets = await getTickets(req, res);
-
     res.json(tickets);
   })
   .post("/", async (req, res) => {
