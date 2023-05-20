@@ -44,7 +44,7 @@ export const ticketsSlice = createSlice({
     },
     [getTickets.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.tickets = action.payload.tickets;
+      state.tickets = action.payload;
     },
     [getTickets.rejected]: (state, action) => {
       state.isLoading = false;

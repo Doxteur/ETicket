@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getTickets } from "../../store/Tickets/ticketSlice";
 
+import { AiFillBug } from "react-icons/ai";
+import { BsFillGearFill } from "react-icons/bs";
+import { HiDotsHorizontal } from "react-icons/hi";
 
 function Content() {
 	const dispatch = useDispatch();
@@ -9,10 +12,21 @@ function Content() {
 	const tickets = useSelector((state) => state.tickets);
 
 	useEffect(() => {
-		console.log(auth);
-
 		dispatch(getTickets(auth.token));
 	}, []);
+
+	const getColor = (typeNoteName) => {
+		switch (typeNoteName) {
+			case "BUG":
+				return { backgroundColor: "#F87171B3", color: "#C00707" };
+			case "FEATURE":
+				return { backgroundColor: "#74DF4F80", color: "#1A6300" };
+			case "AUTRE":
+				return { backgroundColor: "#FBBF24B3", color: "#FBBF24" };
+			default:
+				return { backgroundColor: "#F87171B3", color: "#F87171" };
+		}
+	};
 
 	return (
 		<>
@@ -26,230 +40,113 @@ function Content() {
 									ID
 								</th>
 								<th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-									Fullname
+									Contenu
 								</th>
 								<th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-									Email
+									Créateur
 								</th>
 								<th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-									Phone
+									Statut
 								</th>
 								<th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-									Status
+									Priority
 								</th>
 								<th className="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">
-									Created At
+									Type
 								</th>
 								<th className="px-6 py-3 border-b-2 border-gray-300"></th>
 							</tr>
 						</thead>
 						{/* Ticket Listing */}
 						<tbody className="bg-white">
-							<tr>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-									<div className="flex items-center">
-										<div>
-											<div className="text-sm leading-5 text-gray-800">
-												#1
+							{tickets.tickets &&
+								tickets.tickets.map((ticket) => (
+									<tr key={ticket.id}>
+										<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+											<div className="flex items-center">
+												<div>
+													<div className="text-sm leading-5 text-gray-800">
+														{ticket.id}
+													</div>
+												</div>
 											</div>
-										</div>
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-									<div className="text-sm leading-5 text-blue-900">
-										Damilare Anjorin
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									damilareanjorin1@gmail.com
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									+2348106420637
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									<span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-										<span
-											aria-hidden
-											className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-										></span>
-										<span className="relative text-xs">
-											active
-										</span>
-									</span>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-									September 12
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-									<button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-										View Details
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-									<div className="flex items-center">
-										<div>
-											<div className="text-sm leading-5 text-gray-800">
-												#1
+										</td>
+										<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+											<div className="text-sm leading-5 text-blue-900">
+												{ticket.title}
 											</div>
-										</div>
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-									<div className="text-sm leading-5 text-blue-900">
-										Damilare Anjorin
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									damilareanjorin1@gmail.com
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									+2348106420637
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									<span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-										<span
-											aria-hidden
-											className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-										></span>
-										<span className="relative text-xs">
-											active
-										</span>
-									</span>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-									September 12
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-									<button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-										View Details
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-									<div className="flex items-center">
-										<div>
-											<div className="text-sm leading-5 text-gray-800">
-												#1
+										</td>
+										<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+											{ticket.affectedUser.name}
+										</td>
+										<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+											{ticket.statut}
+										</td>
+										<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+											{/* Switch priority */}
+											{ticket.priority === 1 ? (
+												<span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+													<span
+														aria-hidden
+														className="absolute inset-0 bg-green-400 opacity-50 rounded-full"
+													></span>
+													<span className="relative">
+														LOW
+													</span>
+												</span>
+											) : ticket.priority === 2 ? (
+												<span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
+													<span
+														aria-hidden
+														className="absolute inset-0 bg-yellow-400 opacity-50 rounded-full"
+													></span>
+													<span className="relative">
+														MEDIUM
+													</span>
+												</span>
+											) : (
+												<span className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+													<span
+														aria-hidden
+														className="absolute inset-0 bg-red-400 opacity-50 rounded-full"
+													></span>
+													<span className="relative">
+														HIGH
+													</span>
+												</span>
+											)}
+										</td>
+										<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500  text-xs text-center ">
+											<div
+												className="w-20 rounded-lg py-1"
+												style={getColor(
+													ticket.typeNote.name,
+												)}
+											>
+												<div className="flex items-center justify-center">
+													{ticket.typeNote.name ===
+													"BUG" ? (
+														<AiFillBug />
+													) : ticket.typeNote.name ===
+													  "FEATURE" ? (
+														<BsFillGearFill />
+													) : (
+														<HiDotsHorizontal />
+													)}
+
+													<span className="px-1 font-bold ">
+														{ticket.typeNote.name}
+													</span>
+												</div>
 											</div>
-										</div>
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-									<div className="text-sm leading-5 text-blue-900">
-										Damilare Anjorin
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									damilareanjorin1@gmail.com
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									+2348106420637
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									<span className="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-										<span
-											aria-hidden
-											className="absolute inset-0 bg-red-200 opacity-50 rounded-full"
-										></span>
-										<span className="relative text-xs">
-											not active
-										</span>
-									</span>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-									September 12
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-									<button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-										View Details
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-									<div className="flex items-center">
-										<div>
-											<div className="text-sm leading-5 text-gray-800">
-												#1
-											</div>
-										</div>
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-									<div className="text-sm leading-5 text-blue-900">
-										Damilare Anjorin
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									damilareanjorin1@gmail.com
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									+2348106420637
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									<span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-										<span
-											aria-hidden
-											className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-										></span>
-										<span className="relative text-xs">
-											active
-										</span>
-									</span>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-									September 12
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-									<button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-										View Details
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-									<div className="flex items-center">
-										<div>
-											<div className="text-sm leading-5 text-gray-800">
-												#1
-											</div>
-										</div>
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-									<div className="text-sm leading-5 text-blue-900">
-										Damilare Anjorin
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									damilareanjorin1@gmail.com
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									+2348106420637
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-									<span className="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight">
-										<span
-											aria-hidden
-											className="absolute inset-0 bg-orange-200 opacity-50 rounded-full"
-										></span>
-										<span className="relative text-xs">
-											disabled
-										</span>
-									</span>
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">
-									September 12
-								</td>
-								<td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-									<button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-										View Details
-									</button>
-								</td>
-							</tr>
+										</td>
+										<td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+											<button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
+												View Details
+											</button>
+										</td>
+									</tr>
+								))}
 						</tbody>
 					</table>
 					{/* Bottom Pagination */}

@@ -21,9 +21,20 @@ const getTickets = async (req, res) => {
           id: true,
           name: true,
         },
-      }
-    
-    },  
+      },
+      affectedUser: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      typeNote: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
   });
   return tickets;
 };
@@ -96,17 +107,16 @@ const changeStatus = async (req, res) => {
 };
 
 const deleteTicket = async (req, res) => {
-    const { ticketId } = req.body;
-    if (!ticketId) return res.status(400).json({ message: "Missing fields" });
+  const { ticketId } = req.body;
+  if (!ticketId) return res.status(400).json({ message: "Missing fields" });
 
-    const response = await prisma.ticket.delete({
-        where: {
-            id: ticketId,
-        },
-    });
+  const response = await prisma.ticket.delete({
+    where: {
+      id: ticketId,
+    },
+  });
 
-    res.json(response);
+  res.json(response);
 };
-
 
 export { getTickets, addTicket, assignTicket, changeStatus, deleteTicket };
