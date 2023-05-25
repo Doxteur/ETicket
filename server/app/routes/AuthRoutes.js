@@ -9,9 +9,10 @@ const prisma = new PrismaClient();
 export default router()
   .post("/login", async (req, res) => {
     try {
+      console.log("req.body", req.body);
       if (!req.body?.email || !req.body?.password) {
-        console.log("req.body", req.body);
-        return res.status(400).json({ message: "Missing email or password" });
+
+        return res.status(400).json({ error: "Missing email or password" });
       }
       const user = await prisma.user.findUnique({
         where: {

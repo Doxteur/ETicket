@@ -17,7 +17,7 @@ function SearchBar() {
           <div className="relative inline-block text-left">
             <h1 className="mx-6 bg-gray-200 bg-opacity-70 px-4 rounded-lg font-semibold text-sm cursor-pointer select-none"
             onClick={() => setShowMenu(!showMenu)}
-            
+
             >
               Aujourd'hui
             </h1>
@@ -31,7 +31,7 @@ function SearchBar() {
             >
               <div className="py-1" role="none">
                 <a
-                  href="#"
+                  href="/"
                   className="text-gray-700 block px-4 py-2 text-sm"
                   role="menuitem"
                   tabIndex="-1"
@@ -41,7 +41,7 @@ function SearchBar() {
                   Aujourd'hui
                 </a>
                 <a
-                  href="#"
+                  href="/"
                   className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
                   tabIndex="-1"
@@ -50,7 +50,7 @@ function SearchBar() {
                   Semaine
                 </a>
                 <a
-                  href="#"
+                  href="/"
                   className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
                   tabIndex="-1"

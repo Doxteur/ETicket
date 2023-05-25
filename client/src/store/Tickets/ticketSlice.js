@@ -3,7 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { REACT_APP_API_URL } from "../../config";
 
 export const getTickets = createAsyncThunk("tickets/getTickets", async (data, thunkAPI) => {
-  console.log("Get Tickets",data)
   try {
     const response = await fetch(
       `${REACT_APP_API_URL}/tickets`,
@@ -17,7 +16,6 @@ export const getTickets = createAsyncThunk("tickets/getTickets", async (data, th
     );
 
     const responseData = await response.json();
-    console.log(responseData)
     if (!response.ok) {
       return thunkAPI.rejectWithValue(responseData);
     }
@@ -36,7 +34,7 @@ export const ticketsSlice = createSlice({
     error: null,
   },
   reducers: {
- 
+
   },
   extraReducers: {
     [getTickets.pending]: (state, action) => {

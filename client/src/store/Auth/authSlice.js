@@ -19,7 +19,6 @@ export const login = createAsyncThunk("auth/login", async (data, thunkAPI) => {
     );
 
     const responseData = await response.json();
-    console.log(responseData)
     if (!response.ok) {
       return thunkAPI.rejectWithValue(responseData);
     }
@@ -41,7 +40,6 @@ export const authSlice = createSlice({
   },
   reducers: {
     logout: (state, action) => {
-      console.log("logout");
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;

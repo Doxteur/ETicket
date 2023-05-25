@@ -1,18 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export const registerToken = async (req, res) => {
-  const userId = req.userId;
-  const { token } = req.body;
-
-  const user = await prisma.user.update({
+export async function registerToken(userId, token) {
+  //Add token to user
+  return await prisma.user.update({
     where: {
       id: userId,
     },
     data: {
-      token: token,
+      token,
     },
   });
-
-  return user;
-};
+}

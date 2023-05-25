@@ -1,6 +1,4 @@
-import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Location } from "react-router-dom";
 import {BiLogOut} from 'react-icons/bi'
 import { useDispatch } from "react-redux";
 import { logout } from "../store/Auth/authSlice";
@@ -36,7 +34,7 @@ function SideBar() {
 						</li>
 						<li className="">
 							<div
-								href="#"
+								href="/"
 								className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
 								style={
 									location.pathname === "/dashboard"
@@ -70,7 +68,7 @@ function SideBar() {
 						</li>
 						<li>
 							<div
-								href="#"
+								href="/"
 								className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
 								style={
 									location.pathname === "/tickets"
@@ -114,7 +112,7 @@ function SideBar() {
 							onClick={handleLogout}
 
 						>
-							<button className="flex items-center justify-center w-full h-full text-black bg-red-400 rounded-full">
+							<button className="flex items-center justify-center w-full h-full text-black bg-blue-500 rounded-full">
 								<BiLogOut
 									className="w-6 h-6"
 									color="white"

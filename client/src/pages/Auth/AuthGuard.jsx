@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { Outlet,Navigate } from "react-router-dom";
 
 const AuthGuard = () => {
 
-	const auth = useSelector((state) => state.auth);
+	// const auth = useSelector((state) => state.auth);
 	const token = JSON.parse(localStorage.getItem("token"));
 
 	// ne pas oublier de reactiver la verification de l'authentification
