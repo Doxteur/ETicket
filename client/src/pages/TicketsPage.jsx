@@ -10,7 +10,6 @@ function TicketsPage() {
       <SideBar/>
       <Header/>
       <Content/>
-      
     </div>
   )
 }

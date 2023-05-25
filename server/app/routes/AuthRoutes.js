@@ -24,7 +24,7 @@ export default router()
       if (!bcrypt.compareSync(req.body.password, user.password)) {
         return res.status(401).json({ error: "Mauvais mot de passe" });
       }
-      const token = signToken(user);
+      const token = await signToken(user);
 
       res.json({
         user,
@@ -69,7 +69,7 @@ export default router()
   })
   .get("/me", async (req, res) => {
     try {
-      // use user token to find user 
+      // use user token to find user
       const user = await prisma.user.findUnique({
         where: {
           id: req.body.userId ,
