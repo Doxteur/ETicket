@@ -36,7 +36,8 @@ model Ticket {
   title   String
   content String
   priority Int
-  status Int? @default(0)
+  statusId Int @default(1)
+  status Status @relation("Status",fields: [statusId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   typeNoteId Int
@@ -47,6 +48,11 @@ model Ticket {
   affectedUser User @relation("AffectedUser", fields: [affectedUserId], references: [id])
 }
 
+model Status {
+  id      Int      @id @default(autoincrement())
+  name    String
+  notes   Ticket[] @relation("Status")
+}
 model User {
   id      Int      @id @default(autoincrement())
   email   String   @unique

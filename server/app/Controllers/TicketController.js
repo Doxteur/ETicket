@@ -34,6 +34,12 @@ const getTickets = async (req, res) => {
           name: true,
         },
       },
+      status:{
+        select: {
+          id: true,
+          name: true,
+        },
+      }
     },
   });
   return tickets;

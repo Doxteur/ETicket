@@ -2,54 +2,86 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { REACT_APP_API_URL } from "../../config";
 
-export const getTickets = createAsyncThunk("tickets/getTickets", async (data, thunkAPI) => {
-  try {
-    const response = await fetch(
-      `${REACT_APP_API_URL}/tickets`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + data
-        },
-      }
-    );
+export const getTickets = createAsyncThunk(
+	"tickets/getTickets",
+	async (data, thunkAPI) => {
+		try {
+			const response = await fetch(`${REACT_APP_API_URL}/tickets`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + data,
+				},
+			});
 
-    const responseData = await response.json();
-    if (!response.ok) {
-      return thunkAPI.rejectWithValue(responseData);
-    }
+			const responseData = await response.json();
+			if (!response.ok) {
+				return thunkAPI.rejectWithValue(responseData);
+			}
 
-    return responseData;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data);
-  }
-});
+			return responseData;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+export const setTicket = createAsyncThunk(
+	"tickets/setTicket",
+	async (data, thunkAPI) => {
+		try {
+			const response = await fetch(`${REACT_APP_API_URL}/tickets`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			});
+
+			const responseData = await response.json();
+			if (!response.ok) {
+				return thunkAPI.rejectWithValue(responseData);
+			}
+
+			return responseData;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
 
 export const ticketsSlice = createSlice({
-  name: "tickets",
-  initialState: {
-    tickets: [],
-    isLoading: false,
-    error: null,
-  },
-  reducers: {
-
-  },
-  extraReducers: {
-    [getTickets.pending]: (state, action) => {
+	name: "tickets",
+	initialState: {
+		tickets: [],
+		isLoading: false,
+		error: null,
+	},
+	reducers: {},
+	extraReducers: {
+		[getTickets.pending]: (state, action) => {
+			state.isLoading = true;
+		},
+		[getTickets.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.tickets = action.payload;
+		},
+		[getTickets.rejected]: (state, action) => {
+			state.isLoading = false;
+			state.error = action.payload;
+		},
+    [setTicket.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [getTickets.fulfilled]: (state, action) => {
+    [setTicket.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.tickets = action.payload;
     },
-    [getTickets.rejected]: (state, action) => {
+    [setTicket.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-    },
-  },
+    }
+	},
 });
 
-
 export default ticketsSlice.reducer;
+

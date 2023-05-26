@@ -22,7 +22,7 @@ function LoginPage() {
 			localStorage.setItem("token", JSON.stringify(auth.token));
 			navigate("/tickets");
 		}
-	}, [auth,navigate]);
+	}, [auth, navigate]);
 	return (
 		<section className="min-h-screen flex items-stretch text-white">
 			<div className=" w-full flex items-center justify-center text-center md:px-16 px-0 z-0 bg-[#161616]">
@@ -113,3 +113,4 @@ function LoginPage() {
 }
 
 export default LoginPage;
+

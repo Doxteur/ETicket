@@ -1,19 +1,24 @@
-import  { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getTickets } from "../../store/Tickets/ticketSlice";
+import React, { useEffect, useState } from "react";
 
 import { AiFillBug } from "react-icons/ai";
 import { BsFillGearFill } from "react-icons/bs";
 import { HiDotsHorizontal } from "react-icons/hi";
+import EditTicketModal from "../Modals/EditTicketModal";
 
 function Content() {
+	const [modalIsOpen, setIsOpen] = useState(false);
+	const [ticket, setTicket] = useState(null);
+
 	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth);
 	const tickets = useSelector((state) => state.tickets);
 
+
 	useEffect(() => {
 		dispatch(getTickets(auth.token));
-	}, [auth.token,dispatch]);
+	}, [auth.token, dispatch]);
 
 	const getColor = (typeNoteName) => {
 		switch (typeNoteName) {
@@ -30,6 +35,13 @@ function Content() {
 
 	return (
 		<>
+			{ticket && (
+				<EditTicketModal
+					ticket={ticket}
+					modalIsOpen={modalIsOpen}
+					setIsOpen={setIsOpen}
+				/>
+			)}
 			<div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8 mt-10">
 				<div className="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
 					<table className="min-w-full">
@@ -79,8 +91,10 @@ function Content() {
 										<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
 											{ticket.affectedUser.name}
 										</td>
-										<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-											{ticket.statut}
+										<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900  border-gray-500 text-sm leading-5">
+											<span className="bg-blue-400 rounded p-2 text-white">
+												{ticket.status.name}
+											</span>
 										</td>
 										<td className="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
 											{/* Switch priority */}
@@ -141,8 +155,14 @@ function Content() {
 											</div>
 										</td>
 										<td className="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-											<button className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
-												View Details
+											<button
+												className="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none"
+												onClick={() => {
+													setTicket(ticket);
+													setIsOpen(true);
+												}}
+											>
+												Editer
 											</button>
 										</td>
 									</tr>
@@ -226,3 +246,4 @@ function Content() {
 }
 
 export default Content;
+

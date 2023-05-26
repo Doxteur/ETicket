@@ -13,6 +13,16 @@ async function createTypeNoteIfNotExists(typeNoteData) {
   }
 }
 
+async function createStatusNoteIfNotExists(statusNoteData) {
+  const existingStatusNote = await prisma.status.findFirst({
+    where: { name: statusNoteData.name },
+  });
+
+  if (!existingStatusNote) {
+    await prisma.status.create({ data: statusNoteData });
+  }
+}
+
 async function createUserIfNotExists(userData) {
   const existingUser = await prisma.user.findFirst({
     where: { email: userData.email },
@@ -35,9 +45,17 @@ async function main() {
     { name: 'FEATURE' },
     { name: 'AUTRE' },
   ];
+  const statusNotes = [
+    { name: 'TODO' },
+    { name: 'IN_PROGRESS' },
+    { name: 'DONE' },
+  ];
 
   for (const typeNoteData of typeNotes) {
     await createTypeNoteIfNotExists(typeNoteData);
+  }
+  for (const statusNoteData of statusNotes) {
+    await createStatusNoteIfNotExists(statusNoteData);
   }
 
   // Create users
@@ -64,6 +82,7 @@ async function main() {
       title: 'Ticket 1',
       content: 'Ticket 1 content',
       priority: 1,
+      statusId: 1,
       typeNoteId: 1,
       authorId: 1,
       affectedUserId: 2,
@@ -72,6 +91,7 @@ async function main() {
       title: 'Ticket 2',
       content: 'Ticket 2 content',
       priority: 2,
+      statusId: 2,
       typeNoteId: 2,
       authorId: 2,
       affectedUserId: 1,
@@ -80,6 +100,7 @@ async function main() {
       title: 'Ticket 3',
       content: 'Ticket 3 content',
       priority: 2,
+      statusId: 3,
       typeNoteId: 2,
       authorId: 2,
       affectedUserId: 1,
