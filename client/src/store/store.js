@@ -7,4 +7,5 @@ export default configureStore({
     auth: authSlice.reducer,
     tickets: ticketsSlice.reducer,
   },
+    
 })

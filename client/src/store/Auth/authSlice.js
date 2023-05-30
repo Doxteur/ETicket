@@ -33,7 +33,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
-    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg1MDg5MDE1LCJleHAiOjE2ODUxNzU0MTV9.fS8azdFYXTLaW0nMhohL9sBCa_nt-1rpCQ4BC3nXppk',
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg1NDQzOTI1LCJleHAiOjE2ODU1MzAzMjV9.Z5viewH-EsVlWCm7bz3gQnPNAg8gosjgLlHMojHxhAo',
     isAuthenticated: false,
     isLoading: false,
     error: null,
