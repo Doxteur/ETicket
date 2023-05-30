@@ -8,6 +8,10 @@ function LoginPage() {
 	const navigate = useNavigate();
 	const auth = useSelector((state) => state.auth);
 
+	useEffect(() => {
+		console.log(auth);
+	}, [auth]);
+	
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 

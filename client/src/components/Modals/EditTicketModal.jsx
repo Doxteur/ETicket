@@ -34,6 +34,14 @@ function EditTicketModal({ ticket, modalIsOpen, setIsOpen }) {
 					style={customStyles}
 					contentLabel="Example Modal"
 				>
+					<button
+						className="bg-red-500 text-white p-2 px-4 rounded-md mt-2 float-right"
+						onClick={() => setIsOpen(false)}
+					>
+						X
+					</button>
+
+					
 					<h2 className="text-2xl font-bold p-4">Ticket :</h2>
 					<form action="" onSubmit={handleSubmit(onSubmit)}>
 						<div className="grid grid-cols-3 gap-10">

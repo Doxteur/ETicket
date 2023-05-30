@@ -36,7 +36,6 @@ export const setTicket = createAsyncThunk(
 				},
 				body: JSON.stringify(data),
 			});
-
 			const responseData = await response.json();
 			if (!response.ok) {
 				return thunkAPI.rejectWithValue(responseData);
