@@ -305,7 +305,7 @@ function EditTicketModal({ ticket, modalIsOpen, setIsOpen }) {
 			</Modal>
 			</div>
 			{modalIsOpen && (
-				<div className="w-screen h-screen bg-black absolute top-0 z-40 opacity-30"></div>
+				<div className="w-screen h-screen bg-black absolute top-0 opacity-30"></div>
 			)}
 		</div>
 	);
