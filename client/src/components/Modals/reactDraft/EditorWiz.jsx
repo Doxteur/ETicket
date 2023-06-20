@@ -1,16 +1,11 @@
 import { convertToRaw, EditorState,ContentState,convertFromHTML } from "draft-js";
-import { useState } from "react";
+import React,{ useState,useEffect  } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 
 export default function EditorWiz({ticket}) {
-  const [editorState, setEditorState] = useState(() =>
-  EditorState.createWithContent(
-    ContentState.createFromBlockArray(
-      convertFromHTML('<p>My initial content.</p>')
-    )
-  ));
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
   const [text, setText] = useState();
   const onEditorStateChange = function (editorState) {
     setEditorState(editorState);
@@ -22,6 +17,19 @@ export default function EditorWiz({ticket}) {
     console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
     setText(text);
   };
+
+  useEffect(() => {
+    console.log("useffect");
+    console.log(ticket.content);
+    const blocksFromHTML = convertFromHTML(ticket.content);
+    console.log(blocksFromHTML);
+    const state = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
+    setEditorState(EditorState.createWithContent(state));
+  }, []);
+  
 
   return (
     <>
