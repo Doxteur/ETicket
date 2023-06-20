@@ -41,6 +41,9 @@ const getTickets = async (req, res) => {
         },
       }
     },
+    orderBy: {
+      priority: "asc",
+    },
   });
   return tickets;
 };
