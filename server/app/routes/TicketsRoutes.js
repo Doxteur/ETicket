@@ -4,7 +4,8 @@ import {
   addTicket,
   assignTicket,
   changeStatus,
-  deleteTicket
+  deleteTicket,
+  updateTicket
 } from "../Controllers/TicketController.js";
 
 export default router()
@@ -15,7 +16,13 @@ export default router()
   .post("/", async (req, res) => {
     const ticket = await addTicket(req, res);
     res.json(ticket);
-  }).delete("/", async (req, res) => {
+  })
+  .put("/", async (req, res) => {
+    const ticket = await updateTicket(req, res);
+    res.json(ticket);
+  })
+
+  .delete("/", async (req, res) => {
     const status = await deleteTicket(req, res);
     res.json(status);
   })

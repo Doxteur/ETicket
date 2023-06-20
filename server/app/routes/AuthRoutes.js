@@ -9,7 +9,6 @@ const prisma = new PrismaClient();
 export default router()
   .post("/login", async (req, res) => {
     try {
-      console.log("req.body", req.body);
       if (!req.body?.email || !req.body?.password) {
 
         return res.status(400).json({ error: "Missing email or password" });

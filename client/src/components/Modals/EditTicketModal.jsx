@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
-import { setTicket } from "../../store/Tickets/ticketSlice";
 import EditorComment from "./EditorComment";
+import { changeTicket, updateTicket } from "../../store/Tickets/ticketSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const customStyles = {
 	content: {
@@ -16,21 +17,39 @@ const customStyles = {
 };
 
 Modal.setAppElement("#root");
-function EditTicketModal({ ticket, modalIsOpen, setIsOpen }) {
+function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 	const [createdAt, setCreatedAt] = useState();
 	const [deadline, setDeadline] = useState();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm();
+	const tickets = useSelector((state) => state.tickets);
+	const auth = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
+
 	const onSubmit = (data) => {
-		console.log(data);
-		setTicket(data);
+		const ticketToUpdate = { ...ticket, ...data };
+		handleUpdateTicket(ticketToUpdate);
+		setTicket({ ...ticket, ...data });
 	};
 	useEffect(() => {
-		console.log(ticket);
+		if (ticket) {
+			console.log(ticket);
+			dispatch(changeTicket(ticket));
+			// update react hook form
+			console.log(ticket);
+			reset(ticket);
+		}
 	}, [ticket]);
+
+	const handleUpdateTicket = (updatedTicket) => {
+		dispatch(updateTicket({ value: updatedTicket, token: auth.token }));
+		setIsOpen(false);
+		setTicket({});
+	};
 
 	const formatDate = (date) => {
 		const newdate = new Date(ticket.createdAt).toISOString().slice(0, 10);
@@ -99,6 +118,7 @@ function EditTicketModal({ ticket, modalIsOpen, setIsOpen }) {
 															defaultValue={
 																ticket.title
 															}
+															key={ticket.title}
 															{...register(
 																"title",
 																{
@@ -195,20 +215,18 @@ function EditTicketModal({ ticket, modalIsOpen, setIsOpen }) {
 															name="status"
 															id="status"
 															className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-10/12 ease-linear transition-all duration-150"
-															defaultValue={
-																ticket.status
-															}
+															defaultValue={ticket.status}
 															{...register(
-																"status",
+																"statusId",
 																{
 																	required: true,
 																},
 															)}
 														>
-															<option value="OPEN">
+															<option value="1">
 																OPEN
 															</option>
-															<option value="CLOSE">
+															<option value="2">
 																CLOSE
 															</option>
 														</select>
@@ -293,7 +311,12 @@ function EditTicketModal({ ticket, modalIsOpen, setIsOpen }) {
 												<div className="w-full lg:w-12/12 px-4">
 													<div className="relative w-full mb-3">
 														{ticket.content && (
-															<EditorComment ticket={ticket}/>
+															<EditorComment
+																ticket={ticket}
+																setTicket={
+																	setTicket
+																}
+															/>
 														)}
 													</div>
 												</div>

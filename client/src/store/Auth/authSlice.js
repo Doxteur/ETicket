@@ -51,7 +51,6 @@ export const authSlice = createSlice({
 			state.isLoading = true;
 		},
 		[login.fulfilled]: (state, action) => {
-			console.log("Login", action.payload);
 			state.isLoading = false;
 			state.isAuthenticated = true;
 			state.user = action.payload.user;

@@ -34,12 +34,12 @@ const getTickets = async (req, res) => {
           name: true,
         },
       },
-      status:{
+      status: {
         select: {
           id: true,
           name: true,
         },
-      }
+      },
     },
     orderBy: {
       priority: "asc",
@@ -75,6 +75,51 @@ const addTicket = async (req, res) => {
     },
   });
   res.json(ticket);
+};
+const updateTicket = async (req, res) => {
+  console.log(req.body.value);
+  const { id, title, content, typeNoteId, priority, statusId, affectedUserId } =
+    req.body.value;
+  const priorityInt = parseInt(priority);
+  const statusInt = parseInt(statusId);
+
+  try {
+    const ticket = await prisma.ticket.update({
+      where: {
+        id: id,
+      },
+      data: {
+        title: title,
+        content: content,
+        priority: priorityInt,
+        status: {
+          connect: {
+            id: statusInt,
+          },
+        },
+        affectedUser: {
+          connect: {
+            id: affectedUserId,
+          },
+        },
+        typeNote: {
+          connect: {
+            id: typeNoteId,
+          },
+        },
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: "Ticket not updated",
+      error: err,
+    });
+  }
+
+  res.json({
+    message: "Ticket updated",
+  });
 };
 
 const assignTicket = async (req, res) => {
@@ -128,4 +173,11 @@ const deleteTicket = async (req, res) => {
   res.json(response);
 };
 
-export { getTickets, addTicket, assignTicket, changeStatus, deleteTicket };
+export {
+  getTickets,
+  addTicket,
+  assignTicket,
+  changeStatus,
+  deleteTicket,
+  updateTicket,
+};

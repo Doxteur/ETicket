@@ -1,10 +1,10 @@
 import React from 'react'
 import EditorWiz from './reactDraft/EditorWiz'
 
-function EditorComment({ticket}) {
+function EditorComment({ticket,setTicket}) {
   return (
     <div>
-      <EditorWiz ticket={ticket}/>
+      <EditorWiz ticket={ticket} setTicket={setTicket}/>
     </div>
   )
 }
