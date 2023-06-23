@@ -66,7 +66,7 @@ function Content() {
 				<table className="m-auto whitespace-nowrap">
 					<tbody>
 						{tickets &&
-							tickets.tickets.slice(0, 7).map((element, index) => (
+							tickets.tickets.slice(0, 20).map((element, index) => (
 								<tr
 									tabIndex="0"
 									className="focus:outline-none h-16 border border-gray-100 rounded"
