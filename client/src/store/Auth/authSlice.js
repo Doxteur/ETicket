@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { REACT_APP_API_URL } from "../../config";
+import { redirect } from "react-router-dom";
 // createasyncThunk
 
 // asyncthunk login

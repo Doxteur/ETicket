@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Ticket" ALTER COLUMN "dateLimit" SET DEFAULT '',
+ALTER COLUMN "dateLimit" SET DATA TYPE TEXT;

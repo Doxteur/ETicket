@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import EditorComment from "./EditorComment";
 import { changeTicket, updateTicket } from "../../store/Tickets/ticketSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { status, priority, type } from "../../utils/constant";
 
 const customStyles = {
 	content: {
@@ -19,14 +20,19 @@ const customStyles = {
 Modal.setAppElement("#root");
 function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 	const [createdAt, setCreatedAt] = useState();
-	const [deadline, setDeadline] = useState();
+	const [dateLimit, setDateLimit] = useState(ticket?.dateLimit || "2023-06-01");
+
+	const handleDateChange = (event) => {
+		setDateLimit(event.target.value);
+	  };
+
+	
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
 	} = useForm();
-	const tickets = useSelector((state) => state.tickets);
 	const auth = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
@@ -37,6 +43,7 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 	};
 	useEffect(() => {
 		if (ticket) {
+			setDateLimit(formatDate(ticket.dateLimit));
 			console.log(ticket);
 			dispatch(changeTicket(ticket));
 			// update react hook form
@@ -51,16 +58,11 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 		setTicket({});
 	};
 
-	const formatDate = (date) => {
-		const newdate = new Date(ticket.createdAt).toISOString().slice(0, 10);
-		return newdate;
-	};
-	const handleChangeCreateAt = (event) => {
-		setCreatedAt(event.target.value);
-	};
-	const handleChangeDeadline = (event) => {
-		setDeadline(event.target.value);
-	};
+	function formatDate(date) {
+		const formattedDate = new Date(date).toISOString().split("T")[0];
+		return formattedDate;
+	  }
+
 	return (
 		<div>
 			{ticket && (
@@ -163,11 +165,7 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 																	ticket.createdAt,
 																)
 															}
-															onChange={(e) =>
-																handleChangeCreateAt(
-																	e,
-																)
-															}
+															disabled
 															className=" border border-gray-300 rounded-md p-2"
 														/>
 													</div>
@@ -178,20 +176,16 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 															className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
 															htmlFor="grid-password"
 														>
-															Date limite
+															Date Limite
 														</label>
 														<input
 															type="date"
-															className=" border border-gray-300 rounded-md p-2"
-															value={
-																deadline ||
-																"2023-06-01"
-															}
-															onChange={(e) =>
-																handleChangeDeadline(
-																	e,
-																)
-															}
+															className="border border-gray-300 rounded-md p-2"
+															value={dateLimit}
+															{...register("dateLimit", {
+																required: false,
+															})}
+															onChange={(e) => handleDateChange(e)}
 														/>
 													</div>
 												</div>
@@ -215,7 +209,9 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 															name="status"
 															id="status"
 															className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-10/12 ease-linear transition-all duration-150"
-															defaultValue={ticket.status}
+															defaultValue={
+																ticket.status
+															}
 															{...register(
 																"statusId",
 																{
@@ -223,12 +219,24 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 																},
 															)}
 														>
-															<option value="1">
-																OPEN
-															</option>
-															<option value="2">
-																CLOSE
-															</option>
+															{status.map(
+																(a, index) => {
+																	return (
+																		<option
+																			key={
+																				index
+																			}
+																			value={
+																				a.id
+																			}
+																		>
+																			{
+																				a.name
+																			}
+																		</option>
+																	);
+																},
+															)}
 														</select>
 													</div>
 												</div>
@@ -279,24 +287,22 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 															id="type"
 															className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
 															defaultValue={
-																ticket.type
+																ticket.typeNote
 															}
 															{...register(
-																"type",
+																"typeNoteId",
 																{
 																	required: true,
 																},
 															)}
 														>
-															<option value="BUG">
-																BUG
-															</option>
-															<option value="FEATURE">
-																FEATURE
-															</option>
-															<option value="SUPPORT">
-																SUPPORT
-															</option>
+															{type.map(
+																(a, index) => {
+																	return (
+																		<option key={index} value={a.id}>{a.name}</option>
+																	);
+																},
+															)}
 														</select>
 													</div>
 												</div>

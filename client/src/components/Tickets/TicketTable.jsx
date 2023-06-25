@@ -10,6 +10,8 @@ function TicketTable() {
 					setIsOpen={setIsOpen}
 				/>
 			)} */}
+
+			
 			
       	<div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8 mt-10">
 				<div className="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
@@ -45,7 +47,7 @@ function TicketTable() {
 										</td>
 										<td className="px-6  whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
 											{/* Switch priority */}
-											{ticket.priority === 1 ? (
+											{ticket.priority == 3 ? (
 												<span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
 													<span
 														aria-hidden
@@ -55,7 +57,7 @@ function TicketTable() {
 														LOW
 													</span>
 												</span>
-											) : ticket.priority === 2 ? (
+											) : ticket.priority == 2 ? (
 												<span className="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
 													<span
 														aria-hidden

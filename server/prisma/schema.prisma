@@ -46,6 +46,7 @@ model Ticket {
   author  User    @relation(fields: [authorId], references: [id])
   affectedUserId Int
   affectedUser User @relation("AffectedUser", fields: [affectedUserId], references: [id])
+  dateLimit DateTime @default(now())
 }
 
 model Status {

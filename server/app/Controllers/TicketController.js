@@ -78,11 +78,13 @@ const addTicket = async (req, res) => {
 };
 const updateTicket = async (req, res) => {
   console.log(req.body.value);
-  const { id, title, content, typeNoteId, priority, statusId, affectedUserId } =
+  const { id, title, content, typeNoteId, priority, statusId, affectedUserId,dateLimit } =
     req.body.value;
   const priorityInt = parseInt(priority);
   const statusInt = parseInt(statusId);
+  const dateLimitISO = dateLimit + "T00:00:00.000Z";
 
+  
   try {
     const ticket = await prisma.ticket.update({
       where: {
@@ -92,6 +94,7 @@ const updateTicket = async (req, res) => {
         title: title,
         content: content,
         priority: priorityInt,
+        dateLimit: dateLimitISO,
         status: {
           connect: {
             id: statusInt,
@@ -104,7 +107,7 @@ const updateTicket = async (req, res) => {
         },
         typeNote: {
           connect: {
-            id: typeNoteId,
+            id: parseInt(typeNoteId),
           },
         },
       },

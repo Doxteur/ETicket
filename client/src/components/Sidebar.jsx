@@ -14,7 +14,6 @@ function SideBar() {
 		dispatch(logout())
 		localStorage.removeItem("token");
 		navigate("/login");
-
 	};
 
 	return (

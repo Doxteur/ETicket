@@ -10,6 +10,8 @@ import EditTicketModal from "../Modals/EditTicketModal";
 import Pagination from "./Pagination";
 import { BsCalendarDate } from "react-icons/bs";
 import { BsPencilFill } from "react-icons/bs";
+import {logout} from "../../store/Auth/authSlice";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Content() {
 	const [modalIsOpen, setIsOpen] = useState(false);
@@ -18,10 +20,24 @@ function Content() {
 	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth);
 	const tickets = useSelector((state) => state.tickets);
+	const navigate = useNavigate();
+
 
 	useEffect(() => {
 		dispatch(getTickets(auth.token));
 	}, [auth.token, dispatch]);
+
+
+	useEffect(() => {
+		if (tickets.error) {
+			console.log(tickets.error);
+			toast.error(tickets.error.message);
+			dispatch(logout());
+			localStorage.removeItem("token");
+			navigate("/login");
+		}
+	}, [tickets.error]);
+
 
 	const getColor = (typeNoteName) => {
 		switch (typeNoteName) {
@@ -54,7 +70,8 @@ function Content() {
 				draggable
 				pauseOnHover
 				theme="light"
-			/>{" "}
+			/>
+
 			<EditTicketModal
 				ticket={ticket}
 				setTicket={setTicket}
@@ -208,12 +225,11 @@ function Content() {
 												></path>
 											</svg>
 											<p className="text-sm leading-none text-gray-600 ml-2">
-												{/* {ticket.priority  : ""} */}
-												{element.priority === 3
+												{element.priority == 3
 													? "Low"
-													: element.priority === 2
+													: element.priority == 2
 													? "Medium"
-													: element.priority === 1
+													: element.priority == 1
 													? "High"
 													: ""}
 											</p>
