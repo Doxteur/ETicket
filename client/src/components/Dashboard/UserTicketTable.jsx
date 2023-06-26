@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import useTable from "../../utils/useTable";
-import Pagination from "./Pagination";
+import Pagination from "../Tickets/Pagination";
 import { BsCalendarDate } from "react-icons/bs";
 import { BsPencilFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
+import { BiUserPin } from "react-icons/bi";
 
-function TicketTable({ tickets,rowsPerPage, setTicket, setIsOpen }) {
-
+function UserTicketTable({tickets,rowsPerPage, setTicket, setIsOpen}) {
     const [page, setPage] = useState(1);
     const { slice, range } = useTable(tickets.tickets, page, rowsPerPage);
     const formatDate = (date) => {
         const d = new Date(date);
         return d.toLocaleDateString();
     };
-
-    return (
-        <>
-            <table className="m-auto whitespace-nowrap">
+  return (
+    <div>
+      <table className="m-auto whitespace-nowrap w-full">
                 <tbody>
                     {slice &&
                         slice.map((element, index) => (
@@ -25,35 +24,13 @@ function TicketTable({ tickets,rowsPerPage, setTicket, setIsOpen }) {
                                 className="focus:outline-none h-16 border border-gray-100 rounded"
                                 key={element.id}
                             >
-                                <td>
-                                    <div className="ml-5">
-                                        <div className="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
-                                            <input
-                                                placeholder="checkbox"
-                                                type="checkbox"
-                                                className="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full"
-                                            />
-                                            <div className="check-icon hidden bg-indigo-700 text-white rounded-sm">
-                                                <svg
-                                                    className="icon icon-tabler icon-tabler-check"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="20"
-                                                    height="20"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth="1.5"
-                                                    stroke="currentColor"
-                                                    fill="none"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                >
-                                                    <path
-                                                        stroke="none"
-                                                        d="M0 0h24v24H0z"
-                                                    ></path>
-                                                    <path d="M5 12l5 5l10 -10"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
+                                 <td className="">
+                                    <div className="flex items-center pl-5">
+                                        <BiUserPin className="text-gray-400 mt-0.5 mx-1" size="1.5em" />
+                                        <p className="text-base font-medium leading-none text-gray-700 mr-2">
+                                            {element.affectedUser.name}
+                                        </p>
+
                                     </div>
                                 </td>
                                 <td className="">
@@ -236,8 +213,8 @@ function TicketTable({ tickets,rowsPerPage, setTicket, setIsOpen }) {
             <div className="float-right mr-28 mt-4">
                 <Pagination range={range} slice={slice} setPage={setPage} page={page} />
             </div>
-        </>
-    )
+    </div>
+  )
 }
 
-export default TicketTable
+export default UserTicketTable

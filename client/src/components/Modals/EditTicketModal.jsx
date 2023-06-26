@@ -44,10 +44,8 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 	useEffect(() => {
 		if (ticket) {
 			setDateLimit(formatDate(ticket.dateLimit));
-			console.log(ticket);
 			dispatch(changeTicket(ticket));
 			// update react hook form
-			console.log(ticket);
 			reset(ticket);
 		}
 	}, [ticket]);

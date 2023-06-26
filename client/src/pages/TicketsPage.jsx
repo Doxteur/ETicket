@@ -5,14 +5,11 @@ import Header from "../components/Tickets/Header";
 
 function TicketsPage() {
 
-	
-
 	return (
 		<div>
 			<SideBar />
 			<Header />
 			<Content />
-			
 		</div>
 	);
 }

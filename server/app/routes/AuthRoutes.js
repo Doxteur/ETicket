@@ -10,12 +10,14 @@ export default router()
   .post("/login", async (req, res) => {
     try {
       if (!req.body?.email || !req.body?.password) {
-
         return res.status(400).json({ error: "Missing email or password" });
       }
       const user = await prisma.user.findUnique({
         where: {
           email: req.body.email,
+        },
+        include: {
+          role: true,
         },
       });
       if (!user) {
@@ -72,7 +74,7 @@ export default router()
       // use user token to find user
       const user = await prisma.user.findUnique({
         where: {
-          id: req.body.userId ,
+          id: req.body.userId,
         },
         include: {
           affectedNotes: true,
@@ -98,4 +100,3 @@ export default router()
       res.status(500).json({ message: "Internal server error" });
     }
   });
-

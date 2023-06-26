@@ -74,6 +74,29 @@ export const updateTicket = createAsyncThunk(
 	},
 );
 
+export const getAllTickets = createAsyncThunk(
+	"tickets/getAllTickets",
+	async (data, thunkAPI) => {
+		try {
+			const response = await fetch(`${REACT_APP_API_URL}/admin/tickets`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + data,
+				},
+			});
+			const responseData = await response.json();
+			if (!response.ok) {
+				return thunkAPI.rejectWithValue(responseData);
+			}
+
+			return responseData;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+
 export const ticketsSlice = createSlice({
 	name: "tickets",
 	initialState: {
@@ -158,8 +181,20 @@ export const ticketsSlice = createSlice({
 				theme: "light",
 			});
 		},
+		[getAllTickets.pending]: (state, action) => {
+			state.isLoading = true;
+		},
+		[getAllTickets.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.tickets = action.payload;
+		},
+		[getAllTickets.rejected]: (state, action) => {
+			state.isLoading = false;
+			state.error = action.payload;
+		}
 	},
 });
+
 
 export const { changeTicket } = ticketsSlice.actions;
 export default ticketsSlice.reducer;

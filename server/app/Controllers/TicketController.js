@@ -48,6 +48,41 @@ const getTickets = async (req, res) => {
   return tickets;
 };
 
+const getAllTickets = async (req, res) => {
+  const tickets = await prisma.ticket.findMany({
+    include: {
+      author: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      affectedUser: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      typeNote: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      status: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+    orderBy: {
+      priority: "asc",
+    },
+  });
+  return tickets;
+};
+
 const addTicket = async (req, res) => {
   const userId = req.userId;
   const { title, content, typeNote } = req.body;
@@ -77,7 +112,6 @@ const addTicket = async (req, res) => {
   res.json(ticket);
 };
 const updateTicket = async (req, res) => {
-  console.log(req.body.value);
   const { id, title, content, typeNoteId, priority, statusId, affectedUserId,dateLimit } =
     req.body.value;
   const priorityInt = parseInt(priority);
@@ -183,4 +217,5 @@ export {
   changeStatus,
   deleteTicket,
   updateTicket,
+  getAllTickets
 };

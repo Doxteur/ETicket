@@ -5,7 +5,7 @@ dotenv.config();
 const config = process.env;
 
 export async function signToken(user) {
-  const token = jwt.sign({ id: user.id }, config.ACCESS_TOKEN_SECRET, {
+  const token = jwt.sign({ id: user.id, role:user.role.name }, config.ACCESS_TOKEN_SECRET, {
     expiresIn: 86400, // 24 hours
   });
   await registerToken(user.id, token);

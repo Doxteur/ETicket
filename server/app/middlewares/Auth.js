@@ -16,6 +16,7 @@ export default (req, res, next) => {
             message: 'Failed to authenticate token.',
         });
         }
+
         req.userId = decoded.id;
         return next();
     });

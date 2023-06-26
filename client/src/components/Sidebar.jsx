@@ -1,12 +1,13 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {BiLogOut} from 'react-icons/bi'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/Auth/authSlice";
 
 function SideBar() {
 	let location = useLocation();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const auth = useSelector((state) => state.auth);
 
 
 	const handleLogout = () => {
@@ -31,6 +32,7 @@ function SideBar() {
 								</div>
 							</div>
 						</li>
+						{auth.user.role.name === "CHEF" && (
 						<li className="">
 							<div
 								href="/"
@@ -65,6 +67,7 @@ function SideBar() {
 								</Link>
 							</div>
 						</li>
+						)}
 						<li>
 							<div
 								href="/"

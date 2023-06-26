@@ -26,7 +26,6 @@ const useTable = (data, page, rowsPerPage) => {
       setSlice([...slice]);
     }, [data, setTableRange, page, setSlice]);
   
-    console.log("tableRange", tableRange, "slice", slice);
     return { slice, range: tableRange };
     
 };

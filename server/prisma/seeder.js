@@ -34,6 +34,17 @@ async function createUserIfNotExists(userData) {
   }
 }
 
+async function createRoleIfNotExists(roleData) {
+  const existingRole = await prisma.role.findFirst({
+    where: { name: roleData.name },
+  });
+
+  if (!existingRole) {
+    await prisma.role.create({ data: roleData });
+  }
+}
+
+
 async function createTicket(ticketData) {
   await prisma.ticket.create({ data: ticketData });
 }
@@ -46,9 +57,15 @@ async function main() {
     { name: 'AUTRE' },
   ];
   const statusNotes = [
-    { name: 'TODO' },
-    { name: 'IN_PROGRESS' },
-    { name: 'DONE' },
+    { name: 'NOUVEAU'},
+    { name: 'EN_ATTENTE'},
+    { name: 'EN_COURS'},
+    { name: 'RESOLU'},
+    { name: 'FERME'}
+  ];
+  const roles = [
+    { name: 'USER' },
+    { name: 'CHEF' },
   ];
 
   for (const typeNoteData of typeNotes) {
@@ -57,11 +74,14 @@ async function main() {
   for (const statusNoteData of statusNotes) {
     await createStatusNoteIfNotExists(statusNoteData);
   }
+  for (const roleData of roles) {
+    await createRoleIfNotExists(roleData);
+  }
 
   // Create users
   const users = [
     {
-      email: 'user1@example.com',
+      email: 'jimmy@gmail.com',
       password: 'password1',
       name: 'User 1',
     },
@@ -69,6 +89,7 @@ async function main() {
       email: 'user2@example.com',
       password: 'password2',
       name: 'User 2',
+      roleId: 2,
     },
   ];
 

@@ -7,60 +7,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model Post {
-//   id        Int      @id @default(autoincrement())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   title     String   @db.VarChar(255)
-//   content   String?
-//   published Boolean  @default(false)
-//   authorId  Int
-//   author    User     @relation(fields: [authorId], references: [id])
-// }
-
-// model Profile {
-//   id     Int     @id @default(autoincrement())
-//   bio    String?
-//   userId Int     @unique
-//   user   User    @relation(fields: [userId], references: [id])
-// }
-
 model TypeNote {
-  id      Int      @id @default(autoincrement())
-  name    String
-  notes   Ticket[]
+  id    Int      @id @default(autoincrement())
+  name  String
+  notes Ticket[]
 }
 
 model Ticket {
-  id      Int      @id @default(autoincrement())
-  title   String
-  content String
-  priority Int
-  statusId Int @default(1)
-  status Status @relation("Status",fields: [statusId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  typeNoteId Int
-  typeNote TypeNote @relation(fields: [typeNoteId], references: [id])
-  authorId Int
-  author  User    @relation(fields: [authorId], references: [id])
+  id             Int      @id @default(autoincrement())
+  title          String
+  content        String
+  priority       Int
+  statusId       Int      @default(1)
+  status         Status   @relation("Status", fields: [statusId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  typeNoteId     Int
+  typeNote       TypeNote @relation(fields: [typeNoteId], references: [id])
+  authorId       Int
+  author         User     @relation(fields: [authorId], references: [id])
   affectedUserId Int
-  affectedUser User @relation("AffectedUser", fields: [affectedUserId], references: [id])
-  dateLimit DateTime @default(now())
+  affectedUser   User     @relation("AffectedUser", fields: [affectedUserId], references: [id])
+  dateLimit      DateTime @default(now())
 }
 
 model Status {
-  id      Int      @id @default(autoincrement())
-  name    String
-  notes   Ticket[] @relation("Status")
-}
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  password String
-  name    String?
-  author   Ticket[]
-  affectedNotes Ticket[] @relation("AffectedUser")
-  token  String  @default("")
+  id    Int      @id @default(autoincrement())
+  name  String
+  notes Ticket[] @relation("Status")
 }
 
+model Role {
+  id    Int    @id @default(autoincrement())
+  name  String
+  users User[]
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  password      String
+  name          String?
+  author        Ticket[]
+  affectedNotes Ticket[] @relation("AffectedUser")
+  token         String   @default("")
+  roleId        Int      @default(1)
+  role          Role     @relation(fields: [roleId], references: [id])
+}
