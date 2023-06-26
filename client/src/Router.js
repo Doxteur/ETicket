@@ -1,5 +1,5 @@
 // router react
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import TicketsPage from "./pages/TicketsPage";
@@ -10,7 +10,8 @@ export default function Router() {
   
 
 	return (
-		<BrowserRouter>
+		<HashRouter>
+
 			<Routes>
 				<Route element={<LoginPage />} path="/" />
 				<Route element={<LoginPage />} path="/login" />
@@ -21,6 +22,6 @@ export default function Router() {
 				</Route>
 
 			</Routes>
-		</BrowserRouter>
+		</HashRouter>
 	);
 }

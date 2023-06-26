@@ -11,7 +11,7 @@ exports.createMainWindow = async () => {
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,
-			devTools: config.isDev,
+			devTools: true,
 			contextIsolation: false,
 		},
 		icon: config.icon,
