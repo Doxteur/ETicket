@@ -334,11 +334,13 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 											</div>
 											
 										</div>
+										{auth.user.role.name === "CHEF" && (
 										<button
 										onClick={() => handleDeleteTicket(ticket.id)} 
 										className="m-4  bg-red-500 text-white active:bg-slate-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
 													Supprimer le ticket
 										</button>
+										)}
 									</div>
 								</div>
 							</form>

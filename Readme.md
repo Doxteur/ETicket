@@ -85,6 +85,9 @@ Role Chef de projet/Admin :
 - email: chef@gmail.com
 - password: password2
 
+## Build
+Le build de l'application se trouve dans le dossier dist.
+Veuillez bien faire attention à lancer le serveur node.js.
 
 
 

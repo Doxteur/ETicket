@@ -32,7 +32,7 @@ function SideBar() {
 								</div>
 							</div>
 						</li>
-						{auth.user.role.name === "CHEF" && (
+						{auth?.user?.role?.name === "CHEF" && (
 						<li className="">
 							<div
 								href="/"
