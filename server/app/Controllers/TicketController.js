@@ -85,40 +85,75 @@ const getAllTickets = async (req, res) => {
 
 const addTicket = async (req, res) => {
   const userId = req.userId;
-  const { title, content, typeNote } = req.body;
+  const {
+    title,
+    content,
+    typeNoteId,
+    priority,
+    statusId,
+    affectedUserId,
+    dateLimit,
+  } = req.body;
 
   const ticket = await prisma.ticket.create({
     data: {
       title: title,
       content: content,
+      dateLimit: dateLimit,
+      priority: parseInt(priority),
       typeNote: {
         connect: {
-          id: typeNote,
+          id: parseInt(typeNoteId),
         },
       },
       author: {
         connect: {
-          id: userId,
+          id: parseInt(userId),
         },
       },
       affectedUser: {
         connect: {
-          id: userId,
+          id: parseInt(userId),
         },
       },
-      priority: 1,
+      status: {
+        connect: {
+          id: parseInt(statusId),
+        },
+      },
+      typeNote: {
+        connect: {
+          id: parseInt(typeNoteId),
+        },
+      },
     },
   });
-  res.json(ticket);
+
+  // return all ticket
+  const tickets = await getTickets(req, res);
+  res.json(tickets);
 };
 const updateTicket = async (req, res) => {
-  const { id, title, content, typeNoteId, priority, statusId, affectedUserId,dateLimit } =
-    req.body.value;
+  const {
+    id,
+    title,
+    content,
+    typeNoteId,
+    priority,
+    statusId,
+    affectedUserId,
+    dateLimit,
+  } = req.body.value;
   const priorityInt = parseInt(priority);
   const statusInt = parseInt(statusId);
-  const dateLimitISO = dateLimit + "T00:00:00.000Z";
+  // if already contain T in dateLimit, it means it's already an ISO format
+  let dateLimitISO = "";
+  if (dateLimit.includes("T")) {
+    dateLimitISO = dateLimit;
+  } else {
+    dateLimitISO = dateLimit + "T00:00:00.000Z";
+  }
 
-  
   try {
     const ticket = await prisma.ticket.update({
       where: {
@@ -198,15 +233,15 @@ const changeStatus = async (req, res) => {
 };
 
 const deleteTicket = async (req, res) => {
-  const { ticketId } = req.body;
-  if (!ticketId) return res.status(400).json({ message: "Missing fields" });
+  const { id } = req.body;
+  if (!id) return res.status(400).json({ message: "Missing fields" });
 
   const response = await prisma.ticket.delete({
     where: {
-      id: ticketId,
+      id: id,
     },
   });
-
+  console.log(response);
   res.json(response);
 };
 
@@ -217,5 +252,5 @@ export {
   changeStatus,
   deleteTicket,
   updateTicket,
-  getAllTickets
+  getAllTickets,
 };

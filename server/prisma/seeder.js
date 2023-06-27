@@ -54,6 +54,7 @@ async function main() {
   const typeNotes = [
     { name: 'BUG' },
     { name: 'FEATURE' },
+    { name: 'SUPPORT' },
     { name: 'AUTRE' },
   ];
   const statusNotes = [
@@ -83,12 +84,12 @@ async function main() {
     {
       email: 'jimmy@gmail.com',
       password: 'password1',
-      name: 'User 1',
+      name: 'JimmyD',
     },
     {
-      email: 'user2@example.com',
+      email: 'chef@gmail.com',
       password: 'password2',
-      name: 'User 2',
+      name: 'Chef',
       roleId: 2,
     },
   ];
@@ -127,8 +128,8 @@ async function main() {
       affectedUserId: 1,
     },
     {
-      title: 'Ticket 3',
-      content: 'Ticket 3 content',
+      title: 'Ticket 4',
+      content: 'Ticket 4 content',
       priority: 2,
       statusId: 3,
       typeNoteId: 2,
@@ -136,8 +137,8 @@ async function main() {
       affectedUserId: 1,
     },
     {
-      title: 'Ticket 3',
-      content: 'Ticket 3 content',
+      title: 'Ticket 5',
+      content: 'Ticket 5 content',
       priority: 2,
       statusId: 3,
       typeNoteId: 2,
@@ -145,8 +146,8 @@ async function main() {
       affectedUserId: 1,
     },
     {
-      title: 'Ticket 3',
-      content: 'Ticket 3 content',
+      title: 'Ticket 6',
+      content: 'Ticket 6 content',
       priority: 2,
       statusId: 3,
       typeNoteId: 2,
@@ -154,8 +155,8 @@ async function main() {
       affectedUserId: 1,
     },
     {
-      title: 'Ticket 3',
-      content: 'Ticket 3 content',
+      title: 'Ticket 7',
+      content: 'Ticket 7 content',
       priority: 2,
       statusId: 3,
       typeNoteId: 2,
@@ -163,8 +164,8 @@ async function main() {
       affectedUserId: 1,
     },
     {
-      title: 'Ticket 3',
-      content: 'Ticket 3 content',
+      title: 'Ticket 8',
+      content: 'Ticket 8 content',
       priority: 2,
       statusId: 3,
       typeNoteId: 2,
@@ -172,8 +173,8 @@ async function main() {
       affectedUserId: 1,
     },
     {
-      title: 'Ticket 3',
-      content: 'Ticket 3 content',
+      title: 'Ticket 9',
+      content: 'Ticket 9 content',
       priority: 2,
       statusId: 3,
       typeNoteId: 2,
@@ -181,8 +182,8 @@ async function main() {
       affectedUserId: 1,
     },
     {
-      title: 'Ticket 3',
-      content: 'Ticket 3 content',
+      title: 'Ticket 10',
+      content: 'Ticket 10 content',
       priority: 2,
       statusId: 3,
       typeNoteId: 2,
@@ -190,8 +191,8 @@ async function main() {
       affectedUserId: 1,
     },
     {
-      title: 'Ticket 3',
-      content: 'Ticket 3 content',
+      title: 'Ticket 11',
+      content: 'Ticket 11 content',
       priority: 2,
       statusId: 3,
       typeNoteId: 2,
@@ -199,8 +200,8 @@ async function main() {
       affectedUserId: 1,
     },
     {
-      title: 'Ticket 3',
-      content: 'Ticket 3 content',
+      title: 'Ticket 12',
+      content: 'Ticket 12 content',
       priority: 2,
       statusId: 3,
       typeNoteId: 2,

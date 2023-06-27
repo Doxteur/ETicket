@@ -181,8 +181,9 @@ function TicketTable({ tickets,rowsPerPage, setTicket, setIsOpen }) {
                                 </td>
                                 <td className="pl-5">
                                     <button className="py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded">
-                                        Rendu 18h00 aujourd'hui.
-                                    </button>
+                                    {
+                                            element.dateLimit.split("T")[0]
+                                        }                                    </button>
                                 </td>
 
                                 <td>

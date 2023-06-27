@@ -7,9 +7,10 @@ import EditTicketModal from "../Modals/EditTicketModal";
 import { logout } from "../../store/Auth/authSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import TicketTable from "./TicketTable";
+import AddTicketModal from "../Modals/AddTicketModal";
 
 
-function Content() {
+function Content({modalIsOpenAdd,setIsOpenAdd}) {
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [ticket, setTicket] = useState(null);
 
@@ -53,6 +54,7 @@ function Content() {
 				modalIsOpen={modalIsOpen}
 				setIsOpen={setIsOpen}
 			/>
+			<AddTicketModal modalIsOpenAdd={modalIsOpenAdd} setIsOpenAdd={setIsOpenAdd} />
 
 			<div className="mt-7 overflow-x-auto">
 				{tickets && tickets.tickets && (

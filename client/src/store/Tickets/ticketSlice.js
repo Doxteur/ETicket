@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { REACT_APP_API_URL } from "../../config";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const getTickets = createAsyncThunk(
 	"tickets/getTickets",
@@ -30,13 +30,23 @@ export const getTickets = createAsyncThunk(
 export const setTicket = createAsyncThunk(
 	"tickets/setTicket",
 	async (data, thunkAPI) => {
+		const ticketToCreate = {
+			title: data?.title,
+			content: data?.content || "",
+			typeNoteId: data?.typeNoteId,
+			priority: data?.priority,
+			statusId: data?.statusId,
+			dateLimit: data?.dateLimit,
+			affectedUserId: data?.affectedUserId,
+		};
 		try {
 			const response = await fetch(`${REACT_APP_API_URL}/tickets`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
+					Authorization: "Bearer " + data?.token,
 				},
-				body: JSON.stringify(data),
+				body: JSON.stringify(ticketToCreate),
 			});
 			const responseData = await response.json();
 			if (!response.ok) {
@@ -61,6 +71,30 @@ export const updateTicket = createAsyncThunk(
 					Authorization: "Bearer " + data.token,
 				},
 				body: JSON.stringify(data),
+			});
+			const responseData = await response.json();
+			if (!response.ok) {
+				return thunkAPI.rejectWithValue(responseData);
+			}
+
+			return responseData;
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
+
+export const deleteTicket = createAsyncThunk(
+	"tickets/deleteTicket",
+	async (data, thunkAPI) => {
+		try {
+			const response = await fetch(`${REACT_APP_API_URL}/admin/tickets`, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + data.token,
+				},
+				body: JSON.stringify(data.value),
 			});
 			const responseData = await response.json();
 			if (!response.ok) {
@@ -139,10 +173,30 @@ export const ticketsSlice = createSlice({
 		[setTicket.fulfilled]: (state, action) => {
 			state.isLoading = false;
 			state.tickets = action.payload;
+			toast.success("🦄 Votre ticket a été ajouté !", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
 		},
 		[setTicket.rejected]: (state, action) => {
 			state.isLoading = false;
 			state.error = action.payload;
+			toast.error("❌ Une erreur s'est produit!", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
 		},
 		[updateTicket.pending]: (state, action) => {
 			state.isLoading = true;
@@ -169,7 +223,7 @@ export const ticketsSlice = createSlice({
 		},
 		[updateTicket.rejected]: (state, action) => {
 			state.isLoading = false;
-			state.error = "Un erreur s'est produit !"
+			state.error = "Un erreur s'est produit !";
 			toast.error("❌ Une erreur s'est produit!", {
 				position: "bottom-right",
 				autoClose: 5000,
@@ -191,10 +245,43 @@ export const ticketsSlice = createSlice({
 		[getAllTickets.rejected]: (state, action) => {
 			state.isLoading = false;
 			state.error = action.payload;
-		}
+		},
+		[deleteTicket.pending]: (state, action) => {
+			state.isLoading = true;
+		},
+		[deleteTicket.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			console.log(action.payload);
+			state.tickets = state.tickets.filter(
+				(ticket) => ticket.id !== action.payload.id,
+			);
+			toast.success("🦄 Votre ticket a été supprimé !", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
+		},
+		[deleteTicket.rejected]: (state, action) => {
+			state.isLoading = false;
+			state.error = action.payload;
+			toast.error("❌ Une erreur s'est produit!", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
+		},
 	},
 });
-
 
 export const { changeTicket } = ticketsSlice.actions;
 export default ticketsSlice.reducer;

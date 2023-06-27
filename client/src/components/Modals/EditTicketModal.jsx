@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useForm } from "react-hook-form";
 import EditorComment from "./EditorComment";
-import { changeTicket, updateTicket } from "../../store/Tickets/ticketSlice";
+import { changeTicket, deleteTicket, updateTicket } from "../../store/Tickets/ticketSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { status, priority, type } from "../../utils/constant";
 
@@ -26,7 +26,6 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 		setDateLimit(event.target.value);
 	  };
 
-	
 	const {
 		register,
 		handleSubmit,
@@ -38,6 +37,7 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 
 	const onSubmit = (data) => {
 		const ticketToUpdate = { ...ticket, ...data };
+		
 		handleUpdateTicket(ticketToUpdate);
 		setTicket({ ...ticket, ...data });
 	};
@@ -49,6 +49,11 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 			reset(ticket);
 		}
 	}, [ticket]);
+
+	const handleDeleteTicket = () => {
+		dispatch(deleteTicket({ value: ticket, token: auth.token }));
+		setIsOpen(false);
+	};
 
 	const handleUpdateTicket = (updatedTicket) => {
 		dispatch(updateTicket({ value: updatedTicket, token: auth.token }));
@@ -99,9 +104,11 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 												<h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
 													Info Ticket
 												</h6>
+											
 												<button className="m-4  bg-green-500 text-white active:bg-slate-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
 													Sauvegarder
 												</button>
+											
 											</div>
 											<div className="flex flex-wrap">
 												<div className="w-full lg:w-6/12 px-4">
@@ -181,7 +188,7 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 															className="border border-gray-300 rounded-md p-2"
 															value={dateLimit}
 															{...register("dateLimit", {
-																required: false,
+																required: true,
 															})}
 															onChange={(e) => handleDateChange(e)}
 														/>
@@ -325,7 +332,13 @@ function EditTicketModal({ ticket, setTicket, modalIsOpen, setIsOpen }) {
 													</div>
 												</div>
 											</div>
+											
 										</div>
+										<button
+										onClick={() => handleDeleteTicket(ticket.id)} 
+										className="m-4  bg-red-500 text-white active:bg-slate-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+													Supprimer le ticket
+										</button>
 									</div>
 								</div>
 							</form>
