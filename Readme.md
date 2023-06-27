@@ -87,7 +87,7 @@ Role Chef de projet/Admin :
 
 ## Build
 Le build de l'application se trouve dans le dossier dist.
-Veuillez bien faire attention à lancer le serveur node.js.
+Veuillez bien faire attention à lancer le serveur node.js (API).
 
 
 
