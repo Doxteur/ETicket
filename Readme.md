@@ -31,36 +31,37 @@ Si vous avez docker d'installé sur votre machine, vous pouvez lancer la base de
 ```bash
 docker compose up -d
 ```
+Sinon vous devez faire tourner une base de données postgresql sur le port 5432, il faudra changer les informations de connexion dans le fichier .env
 
-4. Lancer la migration de la base de données
+1. Lancer la migration de la base de données
 ```bash
 yarn migrate
 ```
 
-5. Seeder la base
+1. Seeder la base
 ```bash
 yarn seed
 ```
 
-6. Lancer le serveur
+1. Lancer le serveur
 ```bash
 yarn dev
 ```
 
 ### Front
-La partie Front se trouve dans le dossier client.
+La partie Front se trouve dans le dossier client, ouvrez un nouveau terminal.
 
 1. Se rendre dans le dossier client
 ```bash
 cd client
 ```
 
-2. Installer les dépendances
+1. Installer les dépendances
 ```bash
 yarn
 ```
 
-3. Lancer le serveur
+1. Lancer le serveur
 ```bash
 yarn dev
 ```
