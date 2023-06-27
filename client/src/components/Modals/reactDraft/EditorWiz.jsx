@@ -16,12 +16,12 @@ export default function EditorWiz({ticket,setTicket}) {
   };
 
   useEffect(() => {
-    // const blocksFromHTML = convertFromHTML(ticket?.content);
-    // const state = ContentState.createFromBlockArray(
-    //   blocksFromHTML.contentBlocks,
-    //   blocksFromHTML.entityMap
-    // );
-    // setEditorState(EditorState.createWithContent(state));
+    const blocksFromHTML = convertFromHTML(ticket?.content);
+    const state = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
+    setEditorState(EditorState.createWithContent(state));
   }, []);
   
 
